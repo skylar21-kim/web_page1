@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.views.generic import ListView
+# from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 from .models import Post
 
 # Create your views here.
@@ -7,6 +7,9 @@ class PostList(ListView) :
     model = Post
     ordering = '-pk'
     # template_name = 'blog/post_list.html'
+
+class PostDetail(DetailView) :
+    model = Post
 
 # FBV 방식 주석처리
 # def index(request) :
@@ -25,7 +28,7 @@ def single_post_page(request, pk) :
 
     return render (
         request,
-        'blog/single_post_page.html',
+        'blog/post_detail.html',
         {
             'post' : post,
         }
