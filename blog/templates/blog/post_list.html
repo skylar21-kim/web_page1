@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
 <head>
-  <title>About Me</title>
+  <title>Blog</title>
   <link href="{% static 'blog/bootstrap/bootstrap.min.css' %}" rel="stylesheet" media="screen">
 </head>
 <body>
@@ -78,8 +78,9 @@
 
 <div class="container my-3">
   <div class="row">
-    <div class="col-md-8 col-lg-9">
+    <div class="col-md-8 col-lg-9" id="main-area">
       <h1>Blog</h1>
+      {% if post_list.exists %}
 
         {% for p in post_list %}
         <!-- Blog post-->
@@ -92,7 +93,10 @@
           <div class="card-body">
               <div class="small text-muted">January 1, 2022</div>
               <h2 class="card-title h4">{{ p.title }}</h2>
-              <p class="card-text">{{ p.content }}</p>
+              {% if p.hook_text %}
+                <h5 class="text-muted">{{ p.hook_text }}</h5>
+              {% endif %}
+              <p class="card-text">{{ p.content | truncatewords:45 }}</p>
               <a class="btn btn-primary" href="{{ p.get_absolute_url }}">Read more →</a>
           </div>
           <div class="card-footer text-muted">
@@ -102,6 +106,9 @@
         </div>
         {% endfor %}
 
+      {% else %}
+        <h3>아직 게시물이 없습니다.</h3>
+      {% endif %}
         <!-- Pagination-->
         <ul class="pagination justify-content-center my-4">
             <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
